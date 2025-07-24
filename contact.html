@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ankiees Fitness Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="mainpage1.css">
+    <link rel="stylesheet" href="contact.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="workouts.html" class="logo"><i class="fas fa-dumbbell"></i> Ankiees Fitness Hub</a>
+            <div class="nav-links">
+                <a href="mainpage1.html"><i class="fas fa-home"></i> Home</a>
+                <a href="diet.html"><i class="fas fa-utensils"></i> Diet Plans</a>
+                <a href="workouts.html"><i class="fas fa-dumbbell"></i> Workouts</a>
+                <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+            </div>
+        </div>
+    </nav>
+    
+
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Welcome to Ankiees Fitness Hub</h1>
+            <p>Your journey to a healthier, stronger you starts here.</p>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <h2>Contact Our Team</h2>
+
+        <h3 class="sub-heading">Trainers</h3>
+        <div class="card-container">
+            <div class="contact-card">
+                <i class="fas fa-user-circle card-icon"></i>
+                <h3>Ankush Sharma</h3>
+                <p><i class="fas fa-phone-alt"></i> +91-9876543210</p>
+                <p><i class="fas fa-envelope"></i> ankush@fitnesshub.com</p>
+            </div>
+
+            <div class="contact-card">
+                <i class="fas fa-user-circle card-icon"></i>
+                <h3>Riya Mehta</h3>
+                <p><i class="fas fa-phone-alt"></i> +91-9123456780</p>
+                <p><i class="fas fa-envelope"></i> riya@fitnesshub.com</p>
+            </div>
+        </div>
+
+        <h3 class="sub-heading">Diet Experts</h3>
+        <div class="card-container">
+            <div class="contact-card">
+                <i class="fas fa-user-circle card-icon"></i>
+                <h3>Neha Gupta</h3>
+                <p><i class="fas fa-phone-alt"></i> +91-9988776655</p>
+                <p><i class="fas fa-envelope"></i> neha@fitnesshub.com</p>
+            </div>
+
+            <div class="contact-card">
+                <i class="fas fa-user-circle card-icon"></i>
+                <h3>Rahul Verma</h3>
+                <p><i class="fas fa-phone-alt"></i> +91-8899776655</p>
+                <p><i class="fas fa-envelope"></i> rahul@fitnesshub.com</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>Ankiees Fitness Hub is dedicated to helping you achieve your health and fitness goals through personalized plans and expert guidance.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="index.html">Home</a>
+                <a href="diet.html">Diet Plans</a>
+                <a href="workouts.html">Workouts</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Ankiees Fitness Hub. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        const currentPage = window.location.pathname.split("/").pop();
+        document.querySelectorAll(".nav-links a").forEach(link => {
+          if (link.getAttribute("href") === currentPage) {
+            link.classList.add("active");
+          }
+        });
+      </script>
+      
+</body>
+</html>

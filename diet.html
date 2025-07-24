@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diet Plan Calculator | Ankiees Fitness Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="diet-style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="mainpage1.html" class="logo"><i class="fas fa-dumbbell"></i> Ankiees Fitness Hub</a>
+      <ul class="nav-links">
+        <li><a href="mainpage1.html"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="diet.html" class="active"><i class="fas fa-utensils"></i> Diet Plans</a></li>
+        <li><a href="workouts.html"><i class="fas fa-dumbbell"></i> Workouts</a></li>
+        <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Welcome to Ankiees Fitness Hub</h1>
+            <p>Your journey to a healthier, stronger you starts here.</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="calculator-section">
+            <div class="calculator-card">
+                <h2><i class="fas fa-calculator"></i> Diet Plan Calculator</h2>
+                <form onsubmit="return dietplan(event)" class="diet-form">
+                    <div class="input-container">
+                        <div class="input-group">
+                            <label for="inpage">Age</label>
+                            <input type="number" id="inpage" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="inpgen">Gender</label>
+                            <select id="inpgen" required>
+                                <option value="">Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="inpwei">Weight (kg)</label>
+                            <input type="number" id="inpwei" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="inphei">Height (feet)</label>
+                            <input type="number" id="inphei" step="0.01" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="calculate-btn">
+                        <i class="fas fa-chart-line"></i> Calculate My Plan
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div id="result" ></div>
+
+        <div class="diet-section">
+          <h2 id="weightgain-head" class="section-title">For Weight Gain</h2>
+          <p id="weightgain-para">Prioritize calorie-dense, nutrient-rich foods to build muscle and increase energy.</p>
+
+          <h2 id="weightloss-head" class="section-title">For Weight Loss</h2>
+          <p id="weightloss-para">Focus on low-calorie, nutrient-dense foods to promote fat loss while maintaining muscle mass and energy levels.</p>
+
+            <div id="parent3" class="diet-grid"></div>
+        </div>
+    </div>
+
+  <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3><i class="fas fa-info-circle"></i> About Us</h3>
+                <p>Ankiees Fitness Hub is dedicated to helping you achieve your health and fitness goals through personalized plans and expert guidance.</p>
+            </div>
+            <div class="footer-section">
+                <h3><i class="fas fa-link"></i> Quick Links</h3>
+                <a href="index.html">Home</a>
+                <a href="diet.html">Diet Plans</a>
+                <a href="workouts.html">Workouts</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="footer-section">
+                <h3><i class="fas fa-share-alt"></i> Connect With Us</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Ankiees Fitness Hub. All rights reserved.</p>
+        </div>
+    </footer>
+    
+
+
+    <script>
+
+        function dietplan(event){
+            event.preventDefault();
+         let age=document.getElementById('inpage').value
+         let gender=document.getElementById('inpgen').value
+         let weight=document.getElementById('inpwei').value
+         let heightFeet=document.getElementById('inphei').value
+
+     
+         if (isNaN(weight) || isNaN(heightFeet) || weight <= 0 || heightFeet <= 0) {
+            document.getElementById('result').innerText = "Please enter valid height and weight values.";
+            return;
+        }
+        // Convert height from feet to meters
+        const heightMeters = heightFeet * 0.3048;
+
+        // Calculate current BMI
+        const currentBMI = weight / (heightMeters ** 2);
+
+        // Calculate target weight for BMI = 18.5 and 24.9
+        const minHealthyWeight = 18.5 * (heightMeters ** 2);
+        const maxHealthyWeight = 24.9 * (heightMeters ** 2);
+
+        let message = ``;
+
+        if (currentBMI < 18.5) {
+          const weightToGain = minHealthyWeight - weight;
+         message = `Current BMI: ${currentBMI.toFixed(2)}<br>
+        You are underweight. To reach a BMI of 18.5, you need to gain approximately ${weightToGain.toFixed(2)} kg.<br>
+        Target Weight: ${minHealthyWeight.toFixed(2)} kg`;
+
+        document.getElementById('parent3').innerHTML = ''; // Clear previous results
+        document.getElementById('weightgain-head').style.display = 'block';
+        document.getElementById('weightgain-para').style.display = 'block';
+// for weight loss cards hidden
+        document.getElementById('weightloss-head').style.display = 'none';
+        document.getElementById('weightloss-para').style.display = 'none';
+          
+            
+
+
+              
+let Dietforweightgain=[
+{
+  "image": "assets/diet9.avif",
+  "title": "Chicken Thighs",
+  "content": "Rich in protein and essential fats, chicken thighs are perfect for muscle building. Include them in lunch or dinner.",
+  "timing": "Lunch or dinner (2-3 times a week)"
+},
+{
+  "image": "assets/diet10.avif",
+  "title": "Fatty Fish (Salmon, Mackerel)",
+  "content": "High in omega-3 fatty acids and protein, fatty fish promotes muscle recovery and overall health.",
+  "timing": "Lunch or dinner (2 times a week)"
+},
+{
+  "image": "assets/diet12.avif",
+  "title": "Full-Fat Greek Yogurt",
+  "content": "Packed with protein and probiotics, this is a great snack or breakfast option.",
+  "timing": "Breakfast or snack time (daily)"
+},
+{
+  "image":  "assets/diet11.avif",
+  "title": "Whole Eggs",
+  "content": "A nutrient powerhouse, eggs provide essential amino acids and fats.",
+  "timing": "Breakfast or as a snack (1-2 eggs daily)"
+},
+{
+  "image": "assets/diet13.avif",
+  "title": "Lean Beef",
+  "content": "High-quality protein with iron and zinc, lean beef supports muscle repair.",
+  "timing": "Lunch or dinner (2-3 times a week)"
+},
+{
+  "image": "assets/diet8.avif",
+  "title": "Protein Shakes",
+  "content": "Enhance your protein intake by blending shakes with peanut butter, oats, or fruits.",
+  "timing": "Post-workout or as a snack (daily)"
+},
+{
+  "image": "assets/Protein shakes.avif",
+  "title": "Protein Shakes",
+  "content": "Protein shakes are an excellent way to increase your protein intake, supporting muscle growth and recovery. Blend them with ingredients like banana, oats, and nut butter for added calories.",
+  "timing": "Post-workout or as a meal replacement (daily)"
+},
+{
+  "image": "assets/Sweet potatoes.avif",
+  "title": "Sweet Potatoes",
+  "content": "A complex carbohydrate source, sweet potatoes provide sustained energy.",
+  "timing": "Lunch or dinner (4-5 times a week)"
+},
+{
+  "image": "assets/White rice.avif",
+  "title": "White Rice",
+  "content": "Easily digestible and calorie-dense, white rice is a staple for weight gain.",
+  "timing": "Lunch or dinner (daily)"
+},
+{
+  "image": "assets/Whole-grain bread.avif",
+  "title": "Whole-Grain Bread",
+  "content": "Loaded with fiber and nutrients, pair whole-grain bread with nut butter for added calories.",
+  "timing": "Breakfast or as a snack (daily)"
+},
+{
+  "image": "assets/Nuts pecans.avif",
+  "title": "Nuts and Seeds",
+  "content": "High in healthy fats and calories, nuts like pecans and seeds like flax are ideal.",
+  "timing": "Snack time (handful daily)"
+},
+{
+  "image": "assets/Nuts macadamia.avif",
+  "title": "Nuts and Seeds",
+  "content": "High in healthy fats and calories, nuts like pecans and seeds like flax are ideal.",
+  "timing": "Snack time (handful daily)"
+},
+{
+  "image": "assets/Nuts cashews.avif",
+  "title": "Nuts and Seeds",
+  "content": "High in healthy fats and calories, nuts like pecans and seeds like flax are ideal.",
+  "timing": "Snack time (handful daily)"
+},
+{
+  "image": "assets/Coconut oil.avif",
+  "title": "Coconut Oil",
+  "content": "Coconut oil is a versatile fat source that can be used in cooking and baking to increase calorie intake while providing healthy medium-chain triglycerides.",
+  "timing": "Use in cooking or as a supplement in meals (daily)"
+},
+{
+  "image": "assets/Olive oil.avif",
+  "title": "Olive Oil",
+  "content": "Olive oil is rich in monounsaturated fats and antioxidants. It's perfect for drizzling over salads, vegetables, and grilled meats to add extra calories.",
+  "timing": "Use in salads, cooking, or as a finishing oil (daily)"
+},
+{
+  "image": "assets/almond butter.avif",
+  "title": "Almond Butter",
+  "content": "Almond butter is a nutrient-dense spread loaded with healthy fats, protein, and vitamins. It’s ideal for adding calories to your diet in a delicious way.",
+  "timing": "Spread on whole-grain bread, add to smoothies, or use as a dip (daily)"
+},
+{
+  "image": "assets/Peanut butter.avif",
+  "title": "Peanut Butter",
+  "content": "Peanut butter is a calorie-dense spread that provides a good amount of protein and healthy fats, making it a great addition to your weight gain diet.",
+  "timing": "Spread on toast, add to smoothies, or use as a dip (daily)"
+},
+{
+  "image": "assets/Potatoes.avif",
+  "title": "Potatoes",
+  "content": "Potatoes are a versatile and calorie-rich carbohydrate source. They provide essential vitamins and minerals, supporting overall health and weight gain.",
+  "timing": "Include in lunch or dinner meals (4-5 times a week)"
+},
+{
+  "image": "assets/Pasta.avif",
+  "title": "Pasta",
+  "content": "Pasta is a high-carb food that provides sustained energy and calories. It can be combined with protein sources and healthy fats for balanced weight gain meals.",
+  "timing": "Lunch or dinner (3-4 times a week)"
+},
+{
+  "image": "assets/Whole milk.avif",
+  "title": "Whole Milk",
+  "content": "An excellent source of calories and calcium, whole milk is versatile.",
+  "timing": "Breakfast or in smoothies (2-3 glasses daily)"
+},
+{
+  "image": "assets/flaxseed Seeds.avif",
+  "title": "Flaxseed Seeds",
+  "content": "Flaxseeds are rich in omega-3 fatty acids, fiber, and protein. They help in boosting calorie intake and improving overall health.",
+  "timing": "Add to smoothies, cereals, or salads (daily)"
+},
+{
+  "image": "assets/Seeds pumpkin.avif",
+  "title": "Pumpkin Seeds",
+  "content": "Pumpkin seeds are high in healthy fats, protein, and essential minerals like magnesium and zinc, making them ideal for weight gain.",
+  "timing": "Snack on them throughout the day or add to dishes (daily)"
+},
+{
+  "image": "assets/Cheese.avif",
+  "title": "Cheese and Cottage Cheese",
+  "content": "Cheese is rich in fat and protein, while cottage cheese is a lighter option.",
+  "timing": "Snacks or lunch (daily)"
+},
+{
+  "image": "assets/Cottage cheese.avif",
+  "title": "Cheese and Cottage Cheese",
+  "content": "Cheese is rich in fat and protein, while cottage cheese is a lighter option.",
+  "timing": "Snacks or lunch (daily)"
+},
+{
+  "image": "assets/Cream-based smoothies.avif",
+  "title": "Cream-Based Smoothies",
+  "content": "Blend fruits, cream, and oats for a calorie-packed drink.",
+  "timing": "Breakfast or post-workout (1-2 times daily)"
+},
+{
+  "image": "assets/Cream-based smoothies2.avif",
+  "title": "Cream-Based Smoothies",
+  "content": "Blend fruits, cream, and oats for a calorie-packed drink.",
+  "timing": "Breakfast or post-workout (1-2 times daily)"
+},
+{
+  "image": "assets/Trail mix.avif",
+  "title": "Trail Mix",
+  "content": "A mix of nuts, seeds, and dried fruits makes a perfect on-the-go snack.",
+  "timing": "Mid-morning or afternoon snack (daily)"
+},
+{
+  "image": "assets/Energy bars.avif",
+  "title": "Energy Bars",
+  "content": "Packed with carbs and fats, energy bars are convenient and effective.",
+  "timing": "Pre- or post-workout snack (1-2 times daily)"
+},
+{
+  "image": "assets/Nut butter on toast.avif",
+  "title": "Nut Butter on Toast",
+  "content": "A quick and nutritious snack to boost calorie intake.",
+  "timing": "Breakfast or snack (daily)"
+},
+{
+  "image": "assets/Milk-based smoothies (add oats, nut butter, banana).jpg",
+  "title": "Milk-Based Smoothies",
+  "content": "Combine milk, oats, nut butter, and banana for a high-calorie beverage.",
+  "timing": "Breakfast or post-workout (daily)"
+},
+{
+  "image": "assets/Granola.avif",
+  "title": "Granola",
+  "content": "A high-calorie mix of oats, nuts, and honey, granola is excellent for gaining energy.",
+  "timing": "Breakfast or snack (daily)"
+},
+{
+  "image": "assets/diet7.avif",
+  "title": "Dates",
+  "content": "Dates are a natural source of sugars and nutrients, providing a quick energy boost. They are rich in fiber, potassium, and antioxidants.",
+  "timing": "Breakfast or post-workout (1-2 times daily)"
+},
+{ 
+  "image": "assets/diet3.avif",
+  "title": "Fruits",
+  "content": "Fruits are packed with essential vitamins, minerals, and antioxidants, promoting overall health and immunity.",
+  "timing": "Mid-morning or evening snack (2 times daily)"
+},
+{
+  "image": "assets/diet32.avif",
+  "title": "Almonds",
+  "content": "Almonds are a great source of healthy fats, protein, and fiber, supporting heart health and energy production.",
+ "timing": "Morning or evening snack (1-2 times daily)"
+},
+{
+  "image": "assets/diet24.avif",
+  "title": "Vegetables",
+  "content": "Vegetables are low-calorie, nutrient-rich foods that provide vitamins, minerals, and dietary fiber for a balanced diet.",
+  "timing": "Lunch and dinner (2 times daily)"
+},
+{
+  "image": "assets/diet20.avif",
+  "title": "Leafy Greens ",
+  "content": "Leafy greens are rich in iron, calcium, and antioxidants, supporting bone health and improving digestion.",
+   "timing": "Lunch or dinner (1-2 times daily)"
+}
+
+]
+            Dietforweightgain.forEach(function(val){
+                child=document.createElement('div')
+                childa=document.createElement('div')
+                childb=document.createElement('div')
+                childc=document.createElement('div')
+                img=document.createElement('img')
+        
+      
+                childa.innerText=val.title
+                childb.innerText=val.content
+                childc.innerText=val.timing
+                img.src=val.image
+
+              child.classList.add('diet-card');
+              childa.classList.add('diet-title');
+              childb.classList.add('diet-content');
+              childc.classList.add('diet-timing');
+              img.classList.add('diet-image');
+            
+                child.append(img,childa,childb,childc)
+                parent3.append(child)
+              })
+               
+           
+
+
+        } else if (currentBMI > 24.9) {
+          const weightToLose = weight - maxHealthyWeight;
+          message = `Current BMI: ${currentBMI.toFixed(2)}<br>
+              You are overweight. To reach a BMI of 24.9, you need to lose approximately ${weightToLose.toFixed(2)} kg.<br>
+              Target Weight: ${maxHealthyWeight.toFixed(2)} kg`;
+              // Hide weight gain elements
+             document.getElementById('weightgain-head').style.display = 'none';
+             document.getElementById('weightgain-para').style.display = 'none';
+             document.getElementById('parent3').innerHTML = '';
+
+             // for weight loss cards show
+        document.getElementById('weightloss-head').style.display = 'block';
+        document.getElementById('weightloss-para').style.display = 'block';
+          
+
+
+             Dietforweightloss=[
+             {
+               "image": "assets/diet20.avif",
+               "title": "Spinach",
+               "content": "Spinach is low in calories and high in nutrients like iron, calcium, and vitamins A and C. It helps keep you full with minimal calories.",
+               "timing": "Use in salads, soups, or smoothies (daily)"
+             },
+             {
+               "image": "assets/diet12.avif",
+               "title": "Greek Yogurt",
+               "content": "Low-fat Greek yogurt is high in protein and probiotics, making it a great snack to promote gut health and weight management.",
+               "timing": "Enjoy as a snack, in smoothies, or with fruits (2-3 times per week)"
+             },
+             {
+               "image": "assets/diet5.avif",
+               "title": "Berries",
+               "content": "Berries like blueberries, strawberries, and raspberries are rich in antioxidants and fiber, helping reduce sugar cravings.",
+               "timing": "Add to yogurt, oatmeal, or eat as a snack (daily)"
+             },
+             {
+               "image": "assets/diet10.avif",
+               "title": "Salmon",
+               "content": "Salmon is a lean protein rich in omega-3 fatty acids, which support metabolism and fat burning.",
+               "timing": "Include in meals 2-3 times per week"
+             },
+             {
+               "image": "assets/diet19.avif",
+               "title": "Broccoli",
+               "content": "Broccoli is low in calories and high in fiber, vitamins, and minerals. It supports digestion and helps you feel full longer.",
+               "timing": "Steam or roast as a side dish or include in stir-fries (daily)"
+             },
+             {
+               "image": "assets/diet9.avif",
+               "title": "Chicken Breast",
+               "content": "Chicken breast is a lean protein source that aids muscle maintenance and fat loss.",
+               "timing": "Grill, bake, or stir-fry for lunch or dinner (3-4 times per week)"
+             },
+             {
+               "image": "assets/quinoa.avif",
+               "title": "Quinoa",
+               "content": "Quinoa is a protein-rich whole grain that's gluten-free and high in fiber, promoting satiety and weight management.",
+               "timing": "Use as a rice substitute or in salads (2-3 times per week)"
+             },
+             {
+               "image": "assets/diet31.avif",
+               "title": "Avocado",
+               "content": "Avocado is packed with healthy monounsaturated fats, fiber, and nutrients that support weight loss by reducing hunger.",
+               "timing": "Add to salads, toast, or smoothies (daily)"
+             },
+             {
+               "image": "assets/diet36.avif",
+               "title": "Green Tea",
+               "content": "Green tea is rich in antioxidants and may boost metabolism and fat burning.",
+               "timing": "Drink 1-2 cups per day, preferably before meals"
+             },
+             {
+               "image": "assets/oatmeal.avif",
+               "title": "Oatmeal",
+               "content": "Oatmeal is a high-fiber breakfast option that provides long-lasting energy and helps curb cravings.",
+               "timing": "Prepare with water or almond milk and top with fruits (daily)"
+             },
+             {
+               "image": "assets/lentils.avif",
+               "title": "Lentils",
+               "content": "Lentils are an excellent source of plant-based protein and fiber, helping keep you full for longer.",
+               "timing": "Use in soups, salads, or as a side dish (3-4 times per week)"
+             },
+             {
+               "image": "assets/cucumber.avif",
+               "title": "Cucumber",
+               "content": "Cucumbers are hydrating and low in calories, making them a perfect snack for weight loss.",
+               "timing": "Snack on slices or add to salads (daily)"
+             },
+             {
+               "image": "assets/diet6.avif",
+               "title": "Almonds",
+               "content": "Almonds are rich in healthy fats and protein, helping reduce hunger between meals.",
+               "timing": "Enjoy a small handful as a snack (3-4 times per week)"
+             },
+             {
+               "image": "assets/diet22.avif",
+               "title": "Zucchini",
+               "content": "Zucchini is low in calories and high in water content, making it great for soups or as a pasta substitute.",
+               "timing": "Include in meals as a side or main ingredient (daily)"
+             },
+             {
+               "image": "assets/eggs.avif",
+               "title": "Eggs",
+               "content": "Eggs are a nutrient-dense source of protein that supports muscle building and fat loss.",
+               "timing": "Have boiled, scrambled, or as an omelet (3-4 times per week)"
+             },
+             {
+               "image": "assets/diet14.avif",
+               "title": "Apples",
+               "content": "Apples are high in fiber and water, making them filling and low in calories.",
+               "timing": "Snack on whole or sliced apples (daily)"
+             },
+             {
+               "image": "assets/Peanut butter.avif",
+               "title": "Peanut Butter",
+               "content": "Natural peanut butter provides healthy fats and protein, helping you feel full longer.",
+               "timing": "Spread on whole-grain toast or add to smoothies (moderate portions daily)"
+             },
+             {
+               "image": "assets/Sweet potatoes.avif",
+               "title": "Sweet Potatoes",
+               "content": "Sweet potatoes are rich in fiber and vitamins, providing lasting energy and reducing cravings.",
+               "timing": "Roast, boil, or mash as a side dish (2-3 times per week)"
+             },
+             {
+               "image": "assets/diet15.avif",
+               "title": "Oranges",
+               "content": "Oranges are high in vitamin C and fiber, helping reduce appetite and provide a refreshing snack.",
+               "timing": "Eat as a snack or add to salads (daily)"
+             },
+             {
+               "image": "assets/diet21.avif",
+               "title": "Kale",
+               "content": "Kale is nutrient-dense and low in calories, providing antioxidants and fiber for weight loss.",
+               "timing": "Use in salads, smoothies, or stir-fries (3-4 times per week)"
+             },
+             {
+               "image": "assets/diet34.avif",
+               "title": "Chia Seeds",
+               "content": "Chia seeds are rich in fiber, protein, and omega-3s, helping reduce hunger.",
+               "timing": "Add to yogurt, smoothies, or oatmeal (daily)"
+             },
+             {
+               "image": "assets/green_beans.avif",
+               "title": "Green Beans",
+               "content": "Green beans are a low-calorie vegetable that provides fiber and essential vitamins.",
+               "timing": "Include as a side dish or in stir-fries (2-3 times per week)"
+             },
+             {
+               "image": "assets/pineapple.avif",
+               "title": "Pineapple",
+               "content": "Pineapple is low in calories and contains bromelain, which aids digestion.",
+               "timing": "Enjoy fresh as a snack or dessert (2-3 times per week)"
+             },
+             {
+               "image": "assets/lean_turkey.avif",
+               "title": "Lean Turkey",
+               "content": "Lean turkey is a low-fat, high-protein meat option for supporting fat loss and muscle maintenance.",
+               "timing": "Grill or roast for lunch or dinner (2-3 times per week)"
+             },
+             {
+               "image": "assets/diet23.avif",
+               "title": "Cauliflower",
+               "content": "Cauliflower is versatile and low in calories, ideal as a rice or mashed potato substitute.",
+               "timing": "Use in soups, as a side dish, or in stir-fries (daily)"
+             },
+             {
+               "image": "assets/brussels_sprouts.avif",
+               "title": "Brussels Sprouts",
+               "content": "Brussels sprouts are packed with fiber and vitamins, aiding digestion and satiety.",
+               "timing": "Roast or steam as a side dish (2-3 times per week)"
+             },
+             {
+               "image": "assets/diet17.avif",
+               "title": "Watermelon",
+               "content": "Watermelon is low in calories and high in water content, making it a hydrating snack.",
+               "timing": "Enjoy as a snack or in fruit salads (daily)"
+             },
+             {
+               "image": "assets/mushrooms.avif",
+               "title": "Mushrooms",
+               "content": "Mushrooms are low in calories and provide umami flavor, making meals more satisfying.",
+               "timing": "Use in stir-fries, soups, or as a meat substitute (3-4 times per week)"
+             },
+             {
+               "image": "assets/lemons.avif",
+               "title": "Lemons",
+               "content": "Lemons can enhance the flavor of foods and promote hydration while being low in calories.",
+               "timing": "Use in water, salads, or dressings (daily)"
+             },
+             {
+              "image": "assets/Seeds pumpkin.avif",
+              "title": "Pumpkin Seeds",
+              "content": "Pumpkin seeds are a great source of protein, healthy fats, and essential minerals like magnesium, which support weight management and overall health.",
+              "timing": "Snack on roasted seeds or add to salads and smoothies (3-4 times per week)"
+            }
+           ]
+           Dietforweightloss.forEach(function(val){
+            child=document.createElement('div')
+            childa=document.createElement('div')
+            childb=document.createElement('div')
+            childc=document.createElement('div')
+            img=document.createElement('img')
+    
+  
+            childa.innerText=val.title
+            childb.innerText=val.content
+            childc.innerText=val.timing
+            img.src=val.image
+
+          
+          childa.classList.add('diet-title');
+          childb.classList.add('diet-content');
+          childc.classList.add('diet-timing');
+          img.classList.add('diet-image');
+        
+            child.append(img,childa,childb,childc)
+            parent3.append(child)
+          })
+           
+
+        } else {
+          message = `Current BMI: ${currentBMI.toFixed(2)}<br>
+          Your weight is within a healthy range! Keep maintaining your current weight.`;
+
+           // Hide weight gain elements
+           document.getElementById('weightgain-head').style.display = 'none';
+           document.getElementById('weightgain-para').style.display = 'none';
+           document.getElementById('parent3').innerHTML = '';
+
+           // Hide for weight loss cards
+        document.getElementById('weightloss-head').style.display = 'none';
+        document.getElementById('weightloss-para').style.display = 'none';
+
+
+        Dietfornormal=[
+  {
+    "image": "assets/almond butter.avif",
+    "title": "Almond Butter",
+    "content": "Almond butter is a nutrient-dense spread loaded with healthy fats, protein, and vitamins. It’s ideal for adding calories to your diet in a delicious way.",
+    "timing": "Spread on whole-grain bread, add to smoothies, or use as a dip (daily)"
+  },
+  {
+    "image": "assets/diet31.avif",
+    "title": "Avocado",
+    "content": "Avocado is rich in healthy monounsaturated fats and provides essential vitamins and minerals, making it a great addition to a balanced diet.",
+    "timing": "Add to salads, sandwiches, or eat as a side with your meal (daily)"
+  },
+  {
+    "image": "assets/diet9.avif",
+    "title": "Chicken Breast",
+    "content": "Chicken breast is an excellent source of lean protein, perfect for muscle growth and recovery. It's also low in fat and rich in essential nutrients.",
+    "timing": "Grill, bake, or stir-fry for lunch or dinner (3-4 times a week)"
+  },
+  {
+    "image": "assets/diet10.avif",
+    "title": "Salmon",
+    "content": "Salmon is packed with omega-3 fatty acids, which are beneficial for heart health. It’s also a high-quality protein source.",
+    "timing": "Bake, grill, or pan-sear and enjoy for dinner (2-3 times a week)"
+  },
+  {
+    "image": "assets/diet29.avif",
+    "title": "Oats",
+    "content": "Oats are a great source of fiber, vitamins, and minerals, promoting heart health and digestive function.",
+    "timing": "Enjoy as oatmeal, overnight oats, or in smoothies (daily)"
+  },
+  {
+    "image": "assets/diet2.avif",
+    "title": "Greek Yogurt",
+    "content": "Greek yogurt is high in protein and probiotics, supporting digestive health and muscle repair.",
+    "timing": "Enjoy as a snack, parfait, or add to smoothies (daily)"
+  },
+  {
+    "image": "assets/diet5.avif",
+    "title": "Berries",
+    "content": "Berries are rich in antioxidants, vitamins, and fiber, offering numerous health benefits while satisfying your sweet tooth.",
+    "timing": "Add to smoothies, salads, or enjoy as a snack (daily)"
+  },
+  {
+    "image": "assets/diet11.avif",
+    "title": "Eggs",
+    "content": "Eggs are a complete source of protein and contain essential amino acids, making them a great choice for breakfast or snacks.",
+    "timing": "Boiled, scrambled, or poached, enjoy for breakfast or snacks (daily)"
+  },
+  {
+    "image": "assets/diet20.avif",
+    "title": "Leafy Greens",
+    "content": "Leafy greens like spinach, kale, and arugula are packed with vitamins, minerals, and fiber, crucial for overall health.",
+    "timing": "Add to salads, wraps, or smoothies (daily)"
+  },
+  {
+    "image": "assets/quinoa.avif",
+    "title": "Quinoa",
+    "content": "Quinoa is a complete protein and a great source of fiber, making it a perfect grain alternative for a balanced diet.",
+    "timing": "Use as a base for salads, bowls, or as a side dish (3-4 times a week)"
+  },
+  {
+    "image": "assets/diet41.avif",
+    "title": "Tofu",
+    "content": "Tofu is a high-protein, plant-based food that is rich in iron and calcium, making it an excellent choice for vegetarians and vegans.",
+    "timing": "Add to stir-fries, soups, or salads (3-4 times a week)"
+  },
+  {
+    "image": "assets/Milk-based smoothies (add oats, nut butter, banana).jpg",
+    "title": "Banana",
+    "content": "Bananas are rich in potassium and provide natural energy, making them an ideal snack or pre-workout fuel.",
+    "timing": "Enjoy as a snack or add to smoothies (daily)"
+  },
+  {
+    "image": "assets/Mango.jpg",
+    "title": "Mango",
+    "content": "Mangoes are high in vitamin C and antioxidants, providing a sweet, refreshing way to boost immunity and digestion.",
+    "timing": "Enjoy fresh or in smoothies (2-3 times a week)"
+  },
+  {
+    "image": "assets/diet32.avif",
+    "title": "Almonds",
+    "content": "Almonds are rich in healthy fats, protein, and fiber, helping to keep you full and satisfied while supporting heart health.",
+    "timing": "Snack on them or add to oatmeal and salads (daily)"
+  },
+  {
+    "image": "assets/diet33.avif",
+    "title": "Walnuts",
+    "content": "Walnuts are packed with omega-3 fatty acids and antioxidants, supporting brain health and heart function.",
+    "timing": "Snack on them or sprinkle over salads (daily)"
+  },
+  {
+    "image": "assets/Sweet potatoes.avif",
+    "title": "Sweet Potatoes",
+    "content": "Sweet potatoes are a nutrient-rich carbohydrate that is high in vitamins A and C, promoting eye health and immune function.",
+    "timing": "Roast, mash, or add to stews (2-3 times a week)"
+  },
+  {
+    "image": "assets/Peanut butter.avif",
+    "title": "Peanut Butter",
+    "content": "Peanut butter is a great source of protein and healthy fats, ideal for supporting muscle growth and providing energy.",
+    "timing": "Spread on toast, add to smoothies, or enjoy with fruit (daily)"
+  },
+  {
+    "image": "assets/diet19.avif",
+    "title": "Broccoli",
+    "content": "Broccoli is a powerhouse of vitamins, fiber, and antioxidants, supporting digestive and immune health.",
+    "timing": "Steam, roast, or add to stir-fries (3-4 times a week)"
+  },
+  {
+    "image": "assets/diet39.avif",
+    "title": "Carrots",
+    "content": "Carrots are rich in beta-carotene and fiber, supporting vision and digestive health.",
+    "timing": "Enjoy raw, roasted, or added to salads (3-4 times a week)"
+  },
+  {
+    "image": "assets/diet27.avif",
+    "title": "Chia Seeds",
+    "content": "Chia seeds are an excellent source of fiber, protein, and omega-3 fatty acids, helping with digestion and supporting heart health.",
+    "timing": "Add to smoothies, oatmeal, or yogurt (daily)"
+  },
+  {
+    "image": "assets/Olive oil.avif",
+    "title": "Coconut & Avocado Oil",
+    "content": "Coconut and avocado oils are healthy fats that support heart health and are great for cooking and baking.",
+    "timing": "Use in cooking or add to smoothies (2-3 times a week)"
+  },
+  {
+    "image": "assets/diet21.avif",
+    "title": "Kale",
+    "content": "Kale is a nutrient-dense leafy green high in vitamins A, C, and K, promoting overall health and reducing inflammation.",
+    "timing": "Add to salads, soups, or smoothies (daily)"
+  },
+  {
+    "image": "assets/diet45.avif",
+    "title": "Edamame",
+    "content": "Edamame is a great plant-based protein source, rich in fiber and antioxidants, making it ideal for muscle recovery.",
+    "timing": "Snack on them or add to salads (2-3 times a week)"
+  },
+  {
+    "image": "assets/diet41.avif",
+    "title": "Lentils",
+    "content": "Lentils are a great source of plant-based protein and fiber, supporting muscle growth and digestive health.",
+    "timing": "Add to soups, stews, or salads (3-4 times a week)"
+  },
+  {
+    "image": "assets/Seeds pumpkin.avif",
+    "title": "Pumpkin Seeds",
+    "content": "Pumpkin seeds are rich in magnesium, zinc, and antioxidants, which support heart and immune health.",
+    "timing": "Snack on them or add to salads and smoothies (daily)"
+  },
+  {
+    "image": "assets/diet38.avif",
+    "title": "Tilapia",
+    "content": "Tilapia is a lean source of protein, low in fat, and full of essential nutrients.",
+    "timing": "Grill, bake, or pan-sear for a healthy dinner (2-3 times a week)"
+  },
+  {
+    "image": "assets/diet28.avif",
+    "title": "Tomatoes",
+    "content": "Tomatoes are rich in lycopene, which helps prevent oxidative damage and supports heart health.",
+    "timing": "Enjoy raw, roasted, or in sauces (3-4 times a week)"
+  },
+  {
+    "image": "assets/diet18.avif",
+    "title": "Kiwi",
+    "content": "Kiwi is high in vitamin C, antioxidants, and fiber, supporting immune function and digestive health.",
+    "timing": "Enjoy fresh or add to smoothies (daily)"
+  },
+  {
+    "image": "assets/diet36.avif",
+    "title": "Green Tea",
+    "content": "Green tea is packed with antioxidants and polyphenols, offering numerous health benefits including enhanced metabolism and heart health.",
+    "timing": "Drink as a morning or afternoon refreshment (daily)"
+  },
+  {
+    "image": "assets/diet39.avif",
+    "title": "Spinach",
+    "content": "Spinach is rich in iron, calcium, and vitamins A and C, promoting healthy bones and immune function.",
+    "timing": "Add to salads, smoothies, or sandwiches (daily)"
+  },
+  {
+    "image": "assets/diet14.avif",
+    "title": "Apples",
+    "content": "Apples are a great source of fiber and antioxidants, supporting digestion and heart health.",
+    "timing": "Enjoy as a snack or add to salads (daily)"
+  },
+  {
+    "image": "assets/diet45.avif",
+    "title": "Pears",
+    "content": "Pears are high in fiber, promoting digestive health and providing a natural source of energy.",
+    "timing": "Snack on them or add to salads (daily)"
+  },
+  {
+    "image": "assets/diet41.avif",
+    "title": "Peaches",
+    "content": "Peaches are high in vitamins A and C, promoting skin health and immunity.",
+    "timing": "Enjoy fresh or in smoothies (2-3 times a week)"
+  },
+  {
+    "image": "assets/diet3.avif",
+    "title": "Cucumbers",
+    "content": "Cucumbers are hydrating and packed with antioxidants, supporting hydration and skin health.",
+    "timing": "Enjoy raw in salads, sandwiches, or as a snack (daily)"
+  },
+  {
+    "image": "assets/diet45.avif",
+    "title": "Grapes",
+    "content": "Grapes are rich in antioxidants, supporting heart health and fighting inflammation.",
+    "timing": "Enjoy as a snack or add to salads (daily)"
+  },
+  {
+    "image": "assets/Whole-grain bread.avif",
+    "title": "Whole Grain Bread",
+    "content": "Whole grain bread is high in fiber, promoting digestion and helping regulate blood sugar levels.",
+    "timing": "Toast, sandwich, or add to meals (daily)"
+  },
+  {
+    "image": "assets/dark_chocolate.jpg",
+    "title": "Dark Chocolate",
+    "content": "Dark chocolate is rich in antioxidants and provides a small amount of healthy fats, making it a satisfying treat in moderation.",
+    "timing": "Enjoy as a snack or dessert (2-3 times a week)"
+  },
+  {
+    "image": "assets/diet8.avif",
+    "title": "Chicken Thigh",
+    "content": "Chicken thighs are rich in protein and healthy fats, offering a juicy alternative to chicken breast.",
+    "timing": "Grill, bake, or stir-fry for a hearty meal (2-3 times a week)"
+  },
+  {
+    "image": "assets/diet24.avif",
+    "title": "Cranberries",
+    "content": "Cranberries are rich in antioxidants, particularly vitamin C and fiber, supporting immune health and preventing urinary tract infections.",
+    "timing": "Enjoy fresh, dried, or in smoothies (2-3 times a week)"
+  }
+]
+Dietfornormal.forEach(function(val){
+  child=document.createElement('div')
+  childa=document.createElement('div')
+  childb=document.createElement('div')
+  childc=document.createElement('div')
+  img=document.createElement('img')
+
+
+  childa.innerText=val.title
+  childb.innerText=val.content
+  childc.innerText=val.timing
+  img.src=val.image
+
+
+childa.classList.add('diet-title');
+childb.classList.add('diet-content');
+childc.classList.add('diet-timing');
+img.classList.add('diet-image');
+
+  child.append(img,childa,childb,childc)
+  parent3.append(child)
+})
+
+          
+
+          
+        }
+
+        document.getElementById('result').innerHTML = message;
+
+        }
+
+        const current = location.pathname.split("/").pop();
+        document.querySelectorAll(".nav-links a").forEach(link => {
+          if (link.getAttribute("href") === current) {
+            link.classList.add("active");
+          }
+        });
+
+    </script>
+</body>
+</html>

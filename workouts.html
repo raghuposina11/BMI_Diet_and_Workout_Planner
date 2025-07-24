@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workout Plan Calculator | Ankiees Fitness Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="workouts.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+          <a href="mainpage1.html" class="logo"><i class="fas fa-dumbbell"></i> Ankiees Fitness Hub</a>
+          <ul class="nav-links">
+            <li><a href="mainpage1.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="diet.html"><i class="fas fa-utensils"></i> Diet Plans</a></li>
+            <li><a href="workouts.html" class="active"><i class="fas fa-dumbbell"></i> Workouts</a></li>
+            <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+          </ul>
+        </div>
+      </nav>
+
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Your Personalized Workout Journey</h1>
+            <p>Find the workout routine that fits your body and goals</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="calculator-section">
+            <div class="calculator-card">
+                <h2><i class="fas fa-calculator"></i> Workout Plan Calculator</h2>
+                <form onsubmit="return workoutplan(event)" class="workout-form">
+                    <div class="input-container">
+                        <div class="input-group">
+                            <label for="goal">Fitness Goal</label>
+                            <select id="goal" required>
+                                <option value="">Select Goal</option>
+                                <option value="gain">Muscle Gain</option>
+                                <option value="loss">Fat Loss</option>
+                                <option value="maintain">Maintain Fitness</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="experience">Experience Level</label>
+                            <select id="experience" required>
+                                <option value="">Select Level</option>
+                                <option value="beginner">Beginner</option>
+                                <option value="intermediate">Intermediate</option>
+                                <option value="advanced">Advanced</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="calculate-btn">
+                        <i class="fas fa-dumbbell"></i> Get My Workout Plan
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div id="result"></div>
+        <div id="workout-cards" class="workout-grid"></div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>Ankiees Fitness Hub is dedicated to helping you achieve your health and fitness goals through personalized plans and expert guidance.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="index.html">Home</a>
+                <a href="diet.html">Diet Plans</a>
+                <a href="workouts.html">Workouts</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Ankiees Fitness Hub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function workoutplan(event) {
+            event.preventDefault();
+            const goal = document.getElementById("goal").value;
+            const experience = document.getElementById("experience").value;
+            const workoutCards = document.getElementById("workout-cards");
+            workoutCards.innerHTML = "";
+
+            let plans = [];
+
+            if (goal === "gain") {
+                if (experience === "beginner") {
+                    plans = [
+                        { image: 'assets/Bodyweight Squats.jpg', title: "Bodyweight Squats", content: "Safe, foundational move for building leg strength and stability." },
+                        { image: 'assets/Push-Ups.jpg', title: "Push-Ups", content: "Classic exercise for chest, arms, and core strength." },
+                        { image: 'assets/Dumbbell Rows.jpg', title: "Dumbbell Rows", content: "Simple back exercise to build pulling strength." },
+                        { image: 'assets/Glute Bridge.jpg', title: "Glute Bridge", content: "Great for glutes and lower back activation." },
+                        { image: 'assets/Standing Calf Raises.jpg', title: "Standing Calf Raises", content: "Strengthens calves and improves ankle stability." },
+                        { image: 'assets/Wall Sits.jpg', title: "Wall Sits", content: "Isometric exercise for leg endurance." },
+                        { image: 'assets/Seated Shoulder Press.jpg', title: "Seated Shoulder Press", content: "Beginner-friendly shoulder strength builder." }
+                    ];
+                } else if (experience === "intermediate") {
+                    plans = [
+                        { image: 'assets/Bench Press.jpg', title: "Bench Press", content: "Classic lift for chest and triceps muscle growth." },
+                        { image: 'assets/Deadlift.jpg', title: "Deadlift", content: "Builds total body strength and power." },
+                        { image: 'assets/Barbell Row.jpg', title: "Barbell Row", content: "Strengthens the back and improves posture." },
+                        { image: 'assets/Lunges.jpg', title: "Lunges", content: "Targets legs and glutes for balanced development." },
+                        { image: 'assets/Pull-Ups.jpg', title: "Pull-Ups", content: "Great for upper body and back strength." },
+                        { image: 'assets/Plank.jpg', title: "Plank", content: "Core stability and endurance builder." },
+                        { image: 'assets/Dumbbell Chest Fly.jpg', title: "Dumbbell Chest Fly", content: "Expands chest and shoulder flexibility." }
+                    ];
+                } else if (experience === "advanced") {
+                    plans = [
+                        { image: 'assets/Weighted Pull-Ups.jpg', title: "Weighted Pull-Ups", content: "Advanced move for back and biceps growth." },
+                        { image: 'assets/Squat Variations (Front Squat, Split Squat).jpg', title: "Squat Variations (Front Squat, Split Squat)", content: "Front squats, split squats, and more for advanced leg gains." },
+                        { image: 'assets/Heavy Deadlifts.jpg', title: "Heavy Deadlifts", content: "Maximize strength and muscle mass." },
+                        { image: 'assets/Incline Bench Press.jpg', title: "Incline Bench Press", content: "Upper chest and shoulder focus for advanced lifters." },
+                        { image: 'assets/Bulgarian Split Squat.jpg', title: "Bulgarian Split Squat", content: "Unilateral leg strength and balance." },
+                        { image: 'assets/Barbell Hip Thrust.jpg', title: "Barbell Hip Thrust", content: "Advanced glute and hamstring builder." },
+                        { image: 'assets/Arnold Press.jpg', title: "Arnold Press", content: "Advanced shoulder and upper chest exercise." }
+                    ];
+                }
+            } else if (goal === "loss") {
+                if (experience === "beginner") {
+                    plans = [
+                        { image: 'assets/Walking.jpg', title: "Walking", content: "Accessible, low-impact cardio for fat loss." },
+                        { image: 'assets/Bodyweight Circuits.jpg', title: "Bodyweight Circuits", content: "Simple circuits to burn calories at home (e.g., squats, push-ups, jumping jacks)." },
+                        { image: 'assets/Step-Ups.jpg', title: "Step-Ups", content: "Great for legs and heart health." },
+                        { image: 'assets/Standing March.jpg', title: "Standing March", content: "Gentle cardio to get moving and burn fat." },
+                        { image: 'assets/Seated Knee Lifts.jpg', title: "Seated Knee Lifts", content: "Chair-based cardio for all levels." },
+                        { image: 'assets/Side Steps.jpg', title: "Side Steps", content: "Simple move to keep your heart rate up." },
+                        { image: 'assets/Low-Impact Aerobics.jpg', title: "Low-Impact Aerobics", content: "Easy-to-follow routines for beginners." }
+                    ];
+                } else if (experience === "intermediate") {
+                    plans = [
+                        { image: 'assets/HIIT Workout.jpg', title: "HIIT Workout", content: "High-Intensity Interval Training for effective fat burning." },
+                        { image: 'assets/Cycling.jpg', title: "Cycling", content: "Low-impact cardio for fat burning." },
+                        { image: 'assets/Jump Rope.jpg', title: "Jump Rope", content: "Boosts heart rate and burns calories quickly." },
+                        { image: 'assets/Stair Climbing.jpg', title: "Stair Climbing", content: "Intense cardio for legs and fat loss." },
+                        { image: 'assets/Mountain Biking.jpg', title: "Mountain Biking", content: "Outdoor cardio and adventure." },
+                        { image: 'assets/Shadow Boxing.jpg', title: "Shadow Boxing", content: "Fun, high-energy cardio at home." },
+                        { image: 'assets/Rowing Machine.jpg', title: "Rowing Machine", content: "Full-body cardio and strength." }
+                    ];
+                } else if (experience === "advanced") {
+                    plans = [
+                        { image: 'assets/Mountain Climbers.jpg', title: "Mountain Climbers", content: "Full-body movement for fat loss." },
+                        { image: 'assets/Burpees.jpg', title: "Burpees", content: "Intense, calorie-burning full-body exercise." },
+                        { image: 'assets/Advanced HIIT.jpg', title: "Advanced HIIT", content: "Push your limits with advanced intervals (Tabata, sprints, etc.)." },
+                        { image: 'assets/Sprints.jpg', title: "Sprints", content: "Maximum effort running for rapid fat loss." },
+                        { image: 'assets/Battle Ropes.jpg', title: "Battle Ropes", content: "High-intensity, full-body cardio." },
+                        { image: 'assets/Box Jumps.jpg', title: "Box Jumps", content: "Explosive plyometric for fat loss and power." },
+                        { image: 'assets/Kettlebell Swings.jpg', title: "Kettlebell Swings", content: "Explosive power and conditioning." }
+                    ];
+                }
+            } else if (goal === "maintain") {
+                if (experience === "beginner") {
+                    plans = [
+                        { image: 'assets/Yoga.jpg', title: "Yoga", content: "Improves flexibility, balance, and relaxation." },
+                        { image: 'assets/Light Bodyweight Training.jpg', title: "Light Bodyweight Training", content: "Simple, effective home workout for all-around fitness (squats, push-ups, planks)." },
+                        { image: 'assets/Walking.jpg', title: "Walking", content: "Easy daily movement for health." },
+                        { image: 'assets/Stretching.jpg', title: "Stretching", content: "Keeps muscles healthy and prevents injury." },
+                        { image: 'assets/Chair Squats.jpg', title: "Chair Squats", content: "Gentle lower body move for all ages." },
+                        { image: 'assets/Arm Circles.jpg', title: "Arm Circles", content: "Simple warm-up for shoulder mobility." },
+                        { image: 'assets/Standing Calf Raises2.jpg', title: "Standing Calf Raises", content: "Strengthens calves and improves ankle stability." }
+                    ];
+                } else if (experience === "intermediate") {
+                    plans = [
+                        { image: 'assets/Swimming.jpg', title: "Swimming", content: "Low-impact, full-body exercise for all ages." },
+                        { image: 'assets/Pilates.jpg', title: "Pilates", content: "Enhances core strength and stability." },
+                        { image: 'assets/Stretching Routine.jpg', title: "Stretching Routine", content: "Keeps muscles healthy and prevents injury." },
+                        { image: 'assets/Elliptical Trainer.jpg', title: "Elliptical Trainer", content: "Cardio and joint-friendly for maintaining fitness." },
+                        { image: 'assets/Rowing Machine.jpg', title: "Rowing Machine", content: "Full-body cardio and strength." },
+                        { image: 'assets/Side Plank.jpg', title: "Side Plank", content: "Core and balance for intermediate fitness." },
+                        { image: 'assets/Stationary Bike.jpg', title: "Stationary Bike", content: "Indoor cycling for cardio and endurance." }
+                    ];
+                } else if (experience === "advanced") {
+                    plans = [
+                        { image: 'assets/CrossFit.jpg', title: "CrossFit", content: "High-intensity, varied workouts for total fitness." },
+                        { image: 'assets/Advanced Calisthenics.jpg', title: "Advanced Calisthenics", content: "Muscle-ups, push-ups, pistol squats, and more for advanced athletes." },
+                        { image: 'assets/Endurance Training.jpg', title: "Endurance Training", content: "Long runs, cycling, and more to maintain peak fitness." },
+                        { image: 'assets/Power Yoga.jpg', title: "Power Yoga", content: "Dynamic yoga for strength and flexibility." },
+                        { image: 'assets/Handstand Push-Ups.jpg', title: "Handstand Push-Ups", content: "Advanced upper body and core strength." },
+                        { image: 'assets/Kettlebell Swings2.jpg', title: "Kettlebell Swings", content: "Explosive power and conditioning." },
+                        { image: 'assets/Farmers Walk.jpg', title: "Farmer's Walk", content: "Grip, core, and total body strength." }
+                    ];
+                }
+            }
+
+            plans.forEach(plan => {
+                const card = document.createElement("div");
+                card.classList.add("workout-card");
+                card.innerHTML = `
+                    <img src="${plan.image}" alt="${plan.title}" class="workout-image">
+                    <div class="workout-title">${plan.title}</div>
+                    <div class="workout-content">${plan.content}</div>
+                `;
+                workoutCards.appendChild(card);
+            });
+            document.getElementById("result").innerHTML = `<h3>Showing workout plan for: <span style='color:var(--primary)'>${goal}</span> (<span style='color:var(--secondary)'>${experience}</span>)</h3>`;
+        }
+    </script>
+</body>
+</html>
